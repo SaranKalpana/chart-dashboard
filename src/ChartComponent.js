@@ -19,15 +19,17 @@ const ChartComponent = () => {
     "1m": [56,67,55,22,56,78,88,90,100,34,56,78,99, 105, 78,34, 34,67,22,11, 67,78,50,56],
     "6m": [88,45,23,56,67,55,22,56,78,88,90,100,34,56,78,99, 105, 78,34, 34,67,22,112],
     "1y": [88,45,23,56,67,55,22,56,78,88,90,100,34,56,78,99, 105, 78,34, 34,67,22,11, 67,78,50,56,43,23,56,67,32,54,78],
+    "max": [30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480, 510, 540, 570, 600]  // Example for "max"
   };
 
   const comparisonDataSets = {
-   "1d":  [10, 13, 5, 7, 6, 38, 23,34,10,23,45,67,78,50,56,43,23,56,67,32,54,78],
+    "1d":  [10, 13, 5, 7, 6, 38, 23,34,10,23,45,67,78,50,56,43,23,56,67,32,54,78],
     "3d": [20,34,10,32,27,30,14,60,20,10,70,30,50],
     "1w": [78,88,90,100,34,56,78,99, 105, 78,34, 34,67,22,11, 67,78,50,56,43,23,56,67,32],
     "1m": [88,45,23,56,67,55,22,56,78,88,90,100,34,56,78,],
     "6m": [88,45,23,56,67,55,22,56,78,88,90,100,34,56,78,99, 105, 78,34, 34,67,22,11, ],
     "1y": [85,35,53,56,67,55,22,56,78,88,90,100,34,56,78,99, 105, 78,34, 34,67,22,11, 67,78,50,56,43,23,56,67,32,54,78],
+    "max": [45, 90, 135, 180, 225, 270, 315, 360, 405, 450, 495, 540, 585, 630, 675, 720, 765, 810, 855, 900] // Example for "max"
   };
 
   const selectedData = dataSets[timeRange] || [];
@@ -217,7 +219,7 @@ const ChartComponent = () => {
           </button>
         </div>
         <div className="time-range">
-          {["1d", "3d", "1w", "1m", "6m", "1y"].map((range) => (
+          {["1d", "3d", "1w", "1m", "6m", "1y", "max"].map((range) => (
             <button
               key={range}
               className={`time-btn ${timeRange === range ? "active" : ""}`}
@@ -229,9 +231,38 @@ const ChartComponent = () => {
         </div>
       </div>
 
-      <div className="chart-wrapper">
-        <Line data={data} options={options} />
-      </div>
+      {activeTab === "Chart" && (
+        <div className="chart-wrapper">
+          <Line data={data} options={options} />
+        </div>
+      )}
+      {activeTab === "Summary" && (
+        <div className="tab-content">
+          <h2>Summary</h2>
+          <p>This is a summary of the data over the selected time range. Here you can provide a brief overview or highlights.</p>
+        </div>
+      )}
+      {activeTab === "Statistics" && (
+        <div className="tab-content">
+          <h2>Statistics</h2>
+          <ul>
+            <li>Mean: {meanValue}</li>
+            <li>Standard Deviation: {stdDev}</li>
+          </ul>
+        </div>
+      )}
+      {activeTab === "Analysis" && (
+        <div className="tab-content">
+          <h2>Analysis</h2>
+          <p>Provide detailed analysis of the data here. This might include trends, correlations, or other insights.</p>
+        </div>
+      )}
+      {activeTab === "Settings" && (
+        <div className="tab-content">
+          <h2>Settings</h2>
+          <p>Configure the settings for the chart here. You can set preferences for the data display and other options.</p>
+        </div>
+      )}
     </div>
   );
 };
